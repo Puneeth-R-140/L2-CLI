@@ -1,4 +1,4 @@
-# test-react
+# final-test
 
 React app built for Base L2.
 

@@ -1,41 +1,20 @@
 # L2 CLI
 
-> Fast, opinionated scaffolding for Ethereum Layer 2 applications
+A command-line scaffolding tool for Ethereum Layer 2 application development, with first-class support for Base and Optimism networks.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-![Rust](https://img.shields.io/badge/rust-1.75%2B-orange)
+## Overview
 
-Command-line tool for quickly creating production-ready applications on Base and Optimism.
+L2 CLI streamlines the process of creating production-ready applications on Ethereum Layer 2 networks. Built with Rust for performance and reliability, it provides opinionated templates and tooling to help developers ship faster.
 
-## Why L2 CLI?
+## Features
 
-Building on Layer 2 should be easy. L2 CLI gets you from idea to working app in 60 seconds:
-
-- **Zero config** - Sensible defaults, works out of the box
-- **Multiple networks** - Base and Optimism support
-- **Modern stack** - React, Next.js, TypeScript ready
-- **Best practices** - Security, gas optimization built-in
-
-## Quick Start
-
-```bash
-# Install
-cargo install l2-cli
-
-# Create an app
-l2 init my-dapp
-
-# Select network (Base/Optimism)
-# Project ready in seconds!
-```
+- **Multi-network Support**: Seamless integration with Base and Optimism L2 networks
+- **Modern Stack**: React 18, Vite, Tailwind CSS, and wagmi for Web3 interactions
+- **Zero Configuration**: Sensible defaults with the flexibility to customize
+- **Type-safe**: Full TypeScript support across all templates
+- **Production Ready**: Optimized builds and best practices baked in
 
 ## Installation
-
-### From Cargo (Recommended)
-
-```bash
-cargo install l2-cli
-```
 
 ### From Source
 
@@ -48,109 +27,108 @@ cargo install --path .
 ### Prerequisites
 
 - Rust 1.75 or newer
-- Node.js 18+ (for React/Next.js templates)
+- Node.js 18+ (for generated React applications)
 
 ## Usage
 
-### Create a New Project
+### Creating a New Project
 
 ```bash
 # Interactive mode
 l2 init
 
 # With options
-l2 init my-app --network base --template react --typescript
+l2 init my-dapp --network base --template react
 
-# Quick start
-l2 init my-dapp
+# Quick start with defaults
+l2 init my-project
 ```
 
-### Configuration
+### Configuration Management
 
 ```bash
-# View settings
+# View current configuration
 l2 config list
 
-# Set defaults
+# Set default network
 l2 config set network optimism
+
+# Set default template
 l2 config set template react
 
 # Reset to defaults
 l2 config reset
 ```
 
-### Health Check
+### Environment Verification
 
 ```bash
-# Verify environment
+# Check development environment
 l2 doctor
 ```
 
 ## Supported Networks
 
-### Base (Coinbase L2)
-- **Mainnet:** Chain ID 8453
-- **RPC:** https://mainnet.base.org
-- **Explorer:** https://basescan.org
+### Base
+
+Coinbase's Ethereum L2 network built on the OP Stack.
+
+- **Chain ID**: 8453
+- **RPC**: https://mainnet.base.org
+- **Explorer**: https://basescan.org
+- **Documentation**: https://docs.base.org
 
 ### Optimism
-- **Mainnet:** Chain ID 10
-- **RPC:** https://mainnet.optimism.io
-- **Explorer:** https://optimistic.etherscan.io
+
+Ethereum's first production-grade optimistic rollup.
+
+- **Chain ID**: 10
+- **RPC**: https://mainnet.optimism.io
+- **Explorer**: https://optimistic.etherscan.io
+- **Documentation**: https://docs.optimism.io
 
 ## Templates
 
 ### JavaScript (Default)
-- Vanilla JavaScript + Web3.js
-- Minimal setup, maximum flexibility
-- Perfect for quick prototypes
 
-### React (Coming Soon)
-- React 18 + Vite
-- TypeScript support
-- wagmi for Web3 hooks
-- Tailwind CSS integration
+Minimal setup with vanilla JavaScript and Web3.js integration. Ideal for quick prototypes and learning.
 
-### Next.js (Coming Soon)
-- Next.js 14 App Router
-- Server-side rendering
-- API routes
-- Production-optimized
+### React
+
+Modern React 18 application with:
+- Vite for fast development and optimized builds
+- Tailwind CSS for styling
+- wagmi hooks for Web3 interactions
+- RainbowKit for wallet connection UI
+- Pre-configured for Base and Optimism networks
 
 ## Project Structure
 
+Generated projects follow a standard structure:
+
 ```
 my-app/
-├── index.html      # Main entry point
-├── app.js          # Web3 integration
-└── README.md       # Project documentation
-```
-
-## Examples
-
-### Basic DeFi App
-```bash
-l2 init defi-dashboard --network base
-cd defi-dashboard
-# Edit index.html, add your logic
-```
-
-### NFT Marketplace
-```bash
-l2 init nft-market --network optimism
-cd nft-market
-# Build your marketplace
+├── src/
+│   ├── App.jsx          # Main application component
+│   ├── main.jsx         # Application entry point
+│   ├── wagmi.js         # Web3 configuration
+│   └── index.css        # Global styles
+├── index.html           # HTML template
+├── package.json         # Dependencies and scripts
+└── README.md           # Project documentation
 ```
 
 ## Development
 
+### Building from Source
+
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/Puneeth-R-140/L2-CLI.git
 cd L2-CLI
 
-# Build
-cargo build
+# Build the project
+cargo build --release
 
 # Run locally
 cargo run -- init test-app
@@ -159,47 +137,50 @@ cargo run -- init test-app
 cargo test
 ```
 
-## Contributing
+### Contributing
 
-Contributions welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome. Please ensure your code follows the existing style and includes appropriate tests.
 
-**Areas we'd love help:**
-- Additional templates (Vue, Svelte, Angular)
-- More L2 networks (Arbitrum, zkSync)
-- Component generators
-- Testing utilities
+Areas of interest:
+- Additional framework templates (Vue, Svelte, Angular)
+- Support for more L2 networks (Arbitrum, zkSync)
+- Code generation utilities
+- Testing frameworks integration
 
 ## Roadmap
 
-- [x] Base & Optimism support
+- [x] Base and Optimism network support
 - [x] JavaScript template
+- [x] React template with wagmi integration
 - [x] Configuration management
-- [ ] React template
 - [ ] Next.js template
 - [ ] Component generation
 - [ ] TypeScript scaffolding
-- [ ] Arbitrum support
+- [ ] Arbitrum network support
 - [ ] Testing utilities
-- [ ] Deployment tools
+- [ ] Deployment automation
 
 ## Resources
 
 - [Base Documentation](https://docs.base.org)
 - [Optimism Documentation](https://docs.optimism.io)
-- [Ethereum L2 Overview](https://ethereum.org/layer-2)
+- [Ethereum Layer 2 Overview](https://ethereum.org/layer-2)
+- [wagmi Documentation](https://wagmi.sh)
+- [RainbowKit Documentation](https://rainbowkit.com)
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+MIT License. See [LICENSE](LICENSE) for details.
 
-## Community
+## Author
 
-- **Issues:** [GitHub Issues](https://github.com/Puneeth-R-140/L2-CLI/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/Puneeth-R-140/L2-CLI/discussions)
+Puneeth R - Solo developer focused on Ethereum L2 tooling and infrastructure.
+
+## Support
+
+- Issues: [GitHub Issues](https://github.com/Puneeth-R-140/L2-CLI/issues)
+- Discussions: [GitHub Discussions](https://github.com/Puneeth-R-140/L2-CLI/discussions)
 
 ---
 
-**Built for the Ethereum L2 community**  
-Made with ⚡ by developers, for developers
-
-_Star this repo if you find it useful!_ ⭐
+Built for the Ethereum Layer 2 ecosystem.
