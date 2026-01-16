@@ -1,0 +1,37 @@
+# Rust
+/target
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Testing
+/test-output
+/temp-*
+test-app/
+
+# Config
+.env
+config.local.toml
+
+# Internal planning documents (not for public repo)
+L2_OPPORTUNITY_ANALYSIS.md
+L2_REFACTORING_COMPLETE.md
+LAUNCH_CHECKLIST.md
+REFACTORING_PLAN.md
+PHASE2_SUMMARY.md
+BUILD_SUMMARY.md
+SETUP.md
