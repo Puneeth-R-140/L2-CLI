@@ -25,7 +25,7 @@ test-app/
 test-react/
 final-test/
 test-optimism/
-test-new-colors/
+my-app/
 
 # Config
 .env

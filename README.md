@@ -19,16 +19,31 @@ L2 CLI streamlines the process of creating production-ready applications on Ethe
 ### From Source
 
 ```bash
+# Clone the repository
 git clone https://github.com/Puneeth-R-140/L2-CLI.git
 cd L2-CLI
+
+# Install the binary
 cargo install --path .
 ```
+
+This installs the `l2` command globally on your system.
+
+**Note for Windows users:** You may need to restart your terminal or add `C:\Users\<username>\.cargo\bin` to your PATH environment variable.
 
 ### Prerequisites
 
 - Rust 1.75 or newer
 - Node.js 18+ (for generated React applications)
 
+### Verify Installation
+
+```bash
+l2 --version
+l2 --help
+```
+
+If the `l2` command is not found, restart your terminal or add Cargo's bin directory to your PATH.
 ## Usage
 
 ### Creating a New Project
@@ -130,11 +145,30 @@ cd L2-CLI
 # Build the project
 cargo build --release
 
-# Run locally
-cargo run -- init test-app
+# The binary will be at: target/release/l2.exe (Windows) or target/release/l2 (Unix)
+```
 
+### Running During Development
+
+```bash
+# Option 1: Run without installing
+cargo run -- init test-app --template react --network base
+
+# Option 2: Install locally and use the l2 command
+cargo install --path .
+l2 init test-app --template react --network base
+```
+
+### Testing
+
+```bash
 # Run tests
 cargo test
+
+# Test the CLI
+cargo run -- doctor
+cargo run -- config list
+cargo run -- init test-project
 ```
 
 ### Contributing
