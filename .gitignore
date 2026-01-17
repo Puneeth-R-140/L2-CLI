@@ -31,16 +31,8 @@ my-app/
 .env
 config.local.toml
 
-# Internal planning documents (not for public repo)
-L2_OPPORTUNITY_ANALYSIS.md
-L2_REFACTORING_COMPLETE.md
-LAUNCH_CHECKLIST.md
-REFACTORING_PLAN.md
-PHASE2_SUMMARY.md
-BUILD_SUMMARY.md
+# Internal planning documents 
+
 SETUP.md
 TESTING.md
-SECURITY_AUDIT.md
-PROJECT_EXPLANATION.md
-GRANT_PREPARATION.md
-FINAL_CLEANUP_REPORT.md
+

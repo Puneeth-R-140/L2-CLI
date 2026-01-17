@@ -1,17 +1,18 @@
 # L2 CLI
 
-A command-line scaffolding tool for Ethereum Layer 2 application development, with first-class support for Base and Optimism networks.
+A command-line scaffolding tool for Ethereum Layer 2 application development, with first-class support for Base and Optimism networks. Features integrated Account Abstraction (ERC-4337) support for building next-generation Web3 applications.
 
 ## Overview
 
-L2 CLI streamlines the process of creating production-ready applications on Ethereum Layer 2 networks. Built with Rust for performance and reliability, it provides opinionated templates and tooling to help developers ship faster.
+L2 CLI streamlines the process of creating production-ready applications on Ethereum Layer 2 networks. Built with Rust for performance and reliability, it provides opinionated templates and tooling to help developers ship faster. The tool includes comprehensive support for Account Abstraction, enabling gasless transactions and improved user experience on Base.
 
 ## Features
 
 - **Multi-network Support**: Seamless integration with Base and Optimism L2 networks
+- **Account Abstraction**: Built-in ERC-4337 support with smart account templates and gasless transactions (Base-first)
 - **Modern Stack**: React 18, Vite, Tailwind CSS, and wagmi for Web3 interactions
+- **Smart Contract Integration**: Foundry-based contract development with deployment scripts
 - **Zero Configuration**: Sensible defaults with the flexibility to customize
-- **Type-safe**: Full TypeScript support across all templates
 - **Production Ready**: Optimized builds and best practices baked in
 
 ## Installation
@@ -35,6 +36,7 @@ This installs the `l2` command globally on your system.
 
 - Rust 1.75 or newer
 - Node.js 18+ (for generated React applications)
+- Foundry (optional, for smart contract development)
 
 ### Verify Installation
 
@@ -44,177 +46,226 @@ l2 --help
 ```
 
 If the `l2` command is not found, restart your terminal or add Cargo's bin directory to your PATH.
+
 ## Usage
 
-### Creating a New Project
+### Creating a Standard Project
 
 ```bash
 # Interactive mode
 l2 init
 
 # With options
-l2 init my-dapp --network base --template react
-
-# Quick start with defaults
-l2 init my-project
+l2 init my-app --network base --template react
 ```
 
-### Configuration Management
+### Creating an Account Abstraction Project
 
 ```bash
-# View current configuration
+# Initialize with AA support (Base only)
+l2 init my-app --network base --template react --account-abstraction
+```
+
+This generates a complete project structure with:
+- ERC-4337 smart account contracts (Foundry)
+- React frontend with permissionless.js integration
+- Pimlico bundler/paymaster configuration
+- Ready-to-use gasless transaction components
+
+### Available Options
+
+- `--network <network>`: Target L2 network (base, optimism)
+- `--template <template>`: Project template (javascript, react)
+- `--account-abstraction`: Enable Account Abstraction support (Base only)
+
+## Account Abstraction Setup
+
+When using the `--account-abstraction` flag, the generated project includes:
+
+### Contracts
+
+```bash
+cd my-app/contracts
+forge install
+forge build
+forge test
+```
+
+Includes:
+- `SimpleAccount.sol`: ERC-4337 compatible smart account
+- Deployment scripts for Base Sepolia
+- EntryPoint v0.7 integration
+
+### Frontend
+
+```bash
+cd my-app/frontend
+npm install
+npm run dev
+```
+
+Features:
+- Smart account creation and management
+- Gasless transaction support via Pimlico paymaster
+- WalletConnect integration with RainbowKit
+- React hooks for ERC-4337 operations
+
+### Environment Configuration
+
+Copy `.env.example` to `.env` and configure:
+
+```env
+VITE_BUNDLER_URL=https://api.pimlico.io/v2/84532/rpc?apikey=YOUR_API_KEY
+VITE_PAYMASTER_URL=https://api.pimlico.io/v2/84532/rpc?apikey=YOUR_API_KEY
+VITE_WALLETCONNECT_PROJECT_ID=YOUR_PROJECT_ID
+```
+
+Get API keys:
+- Pimlico: https://dashboard.pimlico.io (free tier available)
+- WalletConnect: https://cloud.walletconnect.com
+
+## Configuration
+
+### Global Configuration
+
+```bash
+# View current config
 l2 config list
 
-# Set default network
-l2 config set network optimism
+# Set a value
+l2 config set <key> <value>
 
-# Set default template
-l2 config set template react
+# Get a value
+l2 config get <key>
 
 # Reset to defaults
 l2 config reset
 ```
 
-### Environment Verification
+Configuration is stored in `~/.l2-cli/config.toml`.
+
+### Environment Check
 
 ```bash
-# Check development environment
 l2 doctor
 ```
 
-## Supported Networks
-
-### Base
-
-Coinbase's Ethereum L2 network built on the OP Stack.
-
-- **Chain ID**: 8453
-- **RPC**: https://mainnet.base.org
-- **Explorer**: https://basescan.org
-- **Documentation**: https://docs.base.org
-
-### Optimism
-
-Ethereum's first production-grade optimistic rollup.
-
-- **Chain ID**: 10
-- **RPC**: https://mainnet.optimism.io
-- **Explorer**: https://optimistic.etherscan.io
-- **Documentation**: https://docs.optimism.io
-
-## Templates
-
-### JavaScript (Default)
-
-Minimal setup with vanilla JavaScript and Web3.js integration. Ideal for quick prototypes and learning.
-
-### React
-
-Modern React 18 application with:
-- Vite for fast development and optimized builds
-- Tailwind CSS for styling
-- wagmi hooks for Web3 interactions
-- RainbowKit for wallet connection UI
-- Pre-configured for Base and Optimism networks
+Validates your development environment, including:
+- Rust and Cargo installation
+- Node.js and npm versions
+- Configuration status
+- Network connectivity
 
 ## Project Structure
 
-Generated projects follow a standard structure:
+### Standard React Template
 
 ```
 my-app/
 ├── src/
-│   ├── App.jsx          # Main application component
-│   ├── main.jsx         # Application entry point
-│   ├── wagmi.js         # Web3 configuration
-│   └── index.css        # Global styles
-├── index.html           # HTML template
-├── package.json         # Dependencies and scripts
-└── README.md           # Project documentation
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── wagmi.js
+│   └── index.css
+├── index.html
+├── vite.config.js
+├── tailwind.config.js
+└── package.json
 ```
+
+### Account Abstraction Template
+
+```
+my-app/
+├── contracts/
+│   ├── src/
+│   │   └── SimpleAccount.sol
+│   ├── script/
+│   │   └── Deploy.s.sol
+│   ├── test/
+│   └── foundry.toml
+├── frontend/
+│   ├── src/
+│   │   ├── hooks/
+│   │   │   └── useSmartAccount.js
+│   │   ├── components/
+│   │   │   └── GaslessButton.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── wagmi.js
+│   ├── .env.example
+│   └── package.json
+└── README.md
+```
+
+## Technology Stack
+
+### CLI
+- Rust with Clap for argument parsing
+- Tera for template rendering
+- Colored output for better UX
+
+### Generated Applications
+- **Frontend**: React 18, Vite, Tailwind CSS
+- **Web3**: wagmi, viem, RainbowKit
+- **Account Abstraction**: permissionless.js v0.3+
+- **Contracts**: Foundry, Solidity 0.8.23+
 
 ## Development
 
-### Building from Source
+### Running from Source
 
 ```bash
-# Clone the repository
-git clone https://github.com/Puneeth-R-140/L2-CLI.git
-cd L2-CLI
+# During development
+cargo run -- init my-app --network base
 
-# Build the project
-cargo build --release
-
-# The binary will be at: target/release/l2.exe (Windows) or target/release/l2 (Unix)
+# After installation
+l2 init my-app --network base
 ```
 
-### Running During Development
+### Running Tests
 
 ```bash
-# Option 1: Run without installing
-cargo run -- init test-app --template react --network base
-
-# Option 2: Install locally and use the l2 command
-cargo install --path .
-l2 init test-app --template react --network base
-```
-
-### Testing
-
-```bash
-# Run tests
 cargo test
-
-# Test the CLI
-cargo run -- doctor
-cargo run -- config list
-cargo run -- init test-project
 ```
 
-### Contributing
+### Building
 
-Contributions are welcome. Please ensure your code follows the existing style and includes appropriate tests.
+```bash
+cargo build --release
+```
 
-Areas of interest:
-- Additional framework templates (Vue, Svelte, Angular)
-- Support for more L2 networks (Arbitrum, zkSync)
-- Code generation utilities
-- Testing frameworks integration
+The binary will be available at `target/release/l2`.
 
-## Roadmap
+## Contributing
 
-- [x] Base and Optimism network support
-- [x] JavaScript template
-- [x] React template with wagmi integration
-- [x] Configuration management
-- [ ] Next.js template
-- [ ] Component generation
-- [ ] TypeScript scaffolding
-- [ ] Arbitrum network support
-- [ ] Testing utilities
-- [ ] Deployment automation
-
-## Resources
-
-- [Base Documentation](https://docs.base.org)
-- [Optimism Documentation](https://docs.optimism.io)
-- [Ethereum Layer 2 Overview](https://ethereum.org/layer-2)
-- [wagmi Documentation](https://wagmi.sh)
-- [RainbowKit Documentation](https://rainbowkit.com)
+Contributions are welcome. Please ensure:
+- Code follows Rust best practices
+- Tests pass
+- Documentation is updated
+- Commits are clear and descriptive
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT License - see LICENSE file for details.
 
 ## Author
 
-Puneeth R - Solo developer focused on Ethereum L2 tooling and infrastructure.
+Puneeth R
+- GitHub: [@Puneeth-R-140](https://github.com/Puneeth-R-140)
+- Repository: [L2-CLI](https://github.com/Puneeth-R-140/L2-CLI)
+
+## Acknowledgments
+
+Built with Rust. Powered by Base, Optimism, Pimlico, and the Ethereum ecosystem.
 
 ## Support
 
-- Issues: [GitHub Issues](https://github.com/Puneeth-R-140/L2-CLI/issues)
-- Discussions: [GitHub Discussions](https://github.com/Puneeth-R-140/L2-CLI/discussions)
+For issues and feature requests, please use the GitHub issue tracker.
 
----
+## Roadmap
 
-Built for the Ethereum Layer 2 ecosystem.
+- Additional L2 network support
+- More smart contract templates
+- Advanced AA features (session keys, multi-sig)
+- Enhanced developer tooling

@@ -35,6 +35,10 @@ enum Commands {
         /// Include Tailwind CSS
         #[arg(long)]
         tailwind: bool,
+
+        /// Enable ERC-4337 Account Abstraction (Base only)
+        #[arg(short = 'a', long)]
+        account_abstraction: bool,
     },
 
     /// Manage CLI configuration
@@ -77,7 +81,8 @@ fn main() {
             template,
             typescript,
             tailwind,
-        } => commands::init::run(name, network, template, typescript, tailwind),
+            account_abstraction,
+        } => commands::init::run(name, network, template, typescript, tailwind, account_abstraction),
         Commands::Config { action } => match action {
             ConfigCommands::Get { key } => commands::config::get(&key),
             ConfigCommands::Set { key, value } => commands::config::set(&key, &value),
